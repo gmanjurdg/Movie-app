@@ -1,10 +1,11 @@
 import React, { useReducer, useEffect } from "react";
+
 import Header from "./Header";
 import Movie from "./Movie";
 import spinner from "../assets/ajax-loader.gif";
-import Search from "./Search";
 import { initialState, reducer } from "../store/reducer";
 import axios from "axios";
+
 
 const MOVIE_API_URL = "https://www.omdbapi.com/?s=man&apikey=4a3b711b";
 
@@ -20,28 +21,7 @@ const App = () => {
     });
   }, []);
 
-  const search = searchKey => {
-    dispatch({
-      type: "SEARCH_MOVIES_REQUEST"
-    });
-    axios(`https://www.omdbapi.com/?s=${searchKey}&apikey=4a3b711b`).then(
-      jsonResponse => {
-        if (jsonResponse.data.Response === "True") {
-          dispatch({
-            type: "SEARCH_MOVIES_SUCCESS",
-            payload: jsonResponse.data.Search
-          });
-        } else {
-          dispatch({
-            type: "SEARCH_MOVIES_FAILURE",
-            error: jsonResponse.data.Error
-          });
-        }
-
-      }
-    );
-  };
-
+  
   const { movies, errorMessage, loading } = state;
 
   const retrievedMovies =
@@ -58,10 +38,8 @@ const App = () => {
   return (
     <div className="App container " style={{textAlign:"center"}}>
       <div className="container">
-        <Header text="Movie Search Application" />
-        <Search search={search} />
-        <marquee>
-        <h1 className=" bt-3">Your Movies</h1></marquee>
+        <Header text="Organic" />
+        {/* <Search search={search} /> */}
         <div className="movies ">{retrievedMovies}</div>
       </div>
     </div>
